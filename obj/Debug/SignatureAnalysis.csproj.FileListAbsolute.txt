@@ -1,0 +1,12 @@
+F:\source\C.Sharp\SignatureAnalysis\bin\Debug\SignatureAnalysis.exe.config
+F:\source\C.Sharp\SignatureAnalysis\bin\Debug\SignatureAnalysis.exe
+F:\source\C.Sharp\SignatureAnalysis\bin\Debug\SignatureAnalysis.pdb
+F:\source\C.Sharp\SignatureAnalysis\obj\Debug\SignatureAnalysis.csprojResolveAssemblyReference.cache
+F:\source\C.Sharp\SignatureAnalysis\obj\Debug\SignatureAnalysis.exe
+F:\source\C.Sharp\SignatureAnalysis\obj\Debug\SignatureAnalysis.pdb
+C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\bin\Debug\SignatureAnalysis.exe.config
+C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\bin\Debug\SignatureAnalysis.exe
+C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\bin\Debug\SignatureAnalysis.pdb
+C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\obj\Debug\SignatureAnalysis.csprojResolveAssemblyReference.cache
+C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\obj\Debug\SignatureAnalysis.exe
+C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\obj\Debug\SignatureAnalysis.pdb
