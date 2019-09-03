@@ -27,7 +27,7 @@ namespace SignatureAnalysis
                 //Retrieve all files from Main Directory
                 List<FileMetaData> myfiles = Search.RetrieveAllFilesinDirectory(directory);
                 //Create CSV File
-                CreateCsvFile(myfiles);
+                CSVBuilder.CreateCsvFile(myfiles, outputFile);
             }
             //Flag given
             else if (args.Length == 3)
@@ -47,7 +47,7 @@ namespace SignatureAnalysis
                 //Program.AddSubdirectoriesToAllDirectoriesList(directory);
                 List<FileMetaData> allfiles = Search.RetrieveAllFilesinDirectoryandSubdirectories(directory);
                 //Create CSV File
-                CreateCsvFile(allfiles);
+                CSVBuilder.CreateCsvFile(allfiles, outputFile);
             }
             //General Input Directions
             else
@@ -58,37 +58,6 @@ namespace SignatureAnalysis
                 Console.WriteLine("Example: SignatureAnalysis.exe c:\\test_files c:\\result\\output.csv -f");
             }
             Console.ReadLine();
-        }
-
-
-
-        public static void CreateCsvFile(List<FileMetaData> toomanyfiles)
-        {
-            int jcount = 0;
-            int pcount = 0;
-            using (StreamWriter sw = new StreamWriter(outputFile))
-            {
-                sw.Write("FILE PATH, FILE TYPE, MD5 HASH" + Environment.NewLine);
-                foreach (FileMetaData file in toomanyfiles)
-                {
-                    if (file.FileType == "JPG")
-                    {
-                        jcount++;
-                    }
-
-                    else
-                    {
-                        pcount++;
-                    }
-                    sw.Write(file.FilePath + ", ");
-                    sw.Write(file.FileType + ", ");
-                    sw.Write(file.MD5Hash);
-                    sw.WriteLine();
-                }
-            }
-
-            Console.WriteLine("Thank you for using my application!" +
-                "\nThere are {0} JPEGs and {1} PDFs in your folder(s).", jcount, pcount);
         }
     }
 }
