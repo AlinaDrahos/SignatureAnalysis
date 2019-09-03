@@ -11,8 +11,7 @@ namespace SignatureAnalysis
 
     class Program
     {
-        static List<string> alldirectories = new List<string>();
-        static List<string> allfiles = new List<string>();
+
         static string outputFile;
         public static void Main(string[] args)
         {
@@ -26,13 +25,9 @@ namespace SignatureAnalysis
                     Console.WriteLine("Please provide a valid directory!!!");
                 }
                 //Retrieve all files from Main Directory
-                string[] allmyFiles = Directory.GetFiles(directory);
-                foreach (string aF in allmyFiles)
-                {
-                    allfiles.Add(aF);
-                }
+                List<FileMetaData> myfiles = Search.RetrieveAllFilesinDirectory(directory);
                 //Create CSV File
-                CreateCsvFile(allfiles);
+                CreateCsvFile(myfiles);
             }
             //Flag given
             else if (args.Length == 3)
@@ -49,7 +44,8 @@ namespace SignatureAnalysis
                     Console.WriteLine("Please provide a valid flag!");
                 }
                 //Retrieve all files from all directories
-                Program.AddSubdirectoriesToAllDirectoriesList(directory);
+                //Program.AddSubdirectoriesToAllDirectoriesList(directory);
+                List<FileMetaData> allfiles = Search.RetrieveAllFilesinDirectoryandSubdirectories(directory);
                 //Create CSV File
                 CreateCsvFile(allfiles);
             }
@@ -64,84 +60,40 @@ namespace SignatureAnalysis
             Console.ReadLine();
         }
 
-        public static void AddSubdirectoriesToAllDirectoriesList(string directory)
-        {
-            string[] af = Directory.GetFiles(directory);
-            foreach (string allmyfiles in af)
-            {
-                allfiles.Add(allmyfiles);
-            }
-            string[] allsubdirectories = Directory.GetDirectories(directory);
-            foreach (string subdirectory in allsubdirectories)
-            {
-                alldirectories.Add(subdirectory);
-                AddSubdirectoriesToAllDirectoriesList(subdirectory);
-            }
-        }
 
-        public static void CreateCsvFile(List<string> toomanyfiles)
+
+        public static void CreateCsvFile(List<FileMetaData> toomanyfiles)
         {
             int jcount = 0;
             int pcount = 0;
             using (StreamWriter sw = new StreamWriter(outputFile))
             {
                 sw.Write("FILE PATH, FILE TYPE, MD5 HASH" + Environment.NewLine);
-                foreach (string file in toomanyfiles)
+                foreach (FileMetaData file in toomanyfiles)
                 {
-                    FileMetaData myData = new FileMetaData();
-                    myData.FilePath = file;
-                    byte[] doc = File.ReadAllBytes(file);
-                    if (doc.Length > 2)
+                    if (file.FileType == "JPG")
                     {
-                        byte doc1 = doc[0];
-                        byte doc2 = doc[1];
-                        byte doc3 = doc[2];
-                        byte doc4 = doc[3];
-
-                        //JPG file
-                        if (Convert.ToByte("FF", 16) == doc1 && Convert.ToByte("D8", 16) == doc2)
-                        {
-                            myData.FileType = "JPG";
-                            myData.MD5Hash = ExtractMD5Hash(doc);
-                            jcount++;
-                        }
-                        //PDF file
-                        else if (Convert.ToByte("25", 16) == doc1 && Convert.ToByte("50", 16) == doc2 &&
-                                 Convert.ToByte("44", 16) == doc3 && Convert.ToByte("46", 16) == doc4)
-                        {
-                            myData.FileType = "PDF";
-                            myData.MD5Hash = ExtractMD5Hash(doc);
-                            pcount++;
-                        }
-
-                        if (!string.IsNullOrEmpty(myData.FileType))
-                        {
-                            sw.Write(myData.FilePath + ", ");
-                            sw.Write(myData.FileType + ", ");
-                            sw.Write(myData.MD5Hash);
-                            sw.WriteLine();
-                        }
-
+                        jcount++;
                     }
+
+                    else
+                    {
+                        pcount++;
+                    }
+                    sw.Write(file.FilePath + ", ");
+                    sw.Write(file.FileType + ", ");
+                    sw.Write(file.MD5Hash);
+                    sw.WriteLine();
                 }
             }
+
             Console.WriteLine("Thank you for using my application!" +
                 "\nThere are {0} JPEGs and {1} PDFs in your folder(s).", jcount, pcount);
         }
-
-        public static string ExtractMD5Hash(byte[] fcontent)
-        {
-            MD5 md5 = MD5.Create();
-            byte[] hash = md5.ComputeHash(fcontent);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                sb.Append(hash[i].ToString("X2"));
-            }
-            return sb.ToString();
-        }
     }
 }
+
+
 
 
 
