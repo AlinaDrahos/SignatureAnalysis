@@ -10,3 +10,9 @@ C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\bin\Debug
 C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\obj\Debug\SignatureAnalysis.csprojResolveAssemblyReference.cache
 C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\obj\Debug\SignatureAnalysis.exe
 C:\Users\alinc\Desktop\Garbage\source\Alina_Solution\SignatureAnalysis\obj\Debug\SignatureAnalysis.pdb
+D:\source\GitHub\SignatureAnalysis\bin\Debug\SignatureAnalysis.exe.config
+D:\source\GitHub\SignatureAnalysis\bin\Debug\SignatureAnalysis.exe
+D:\source\GitHub\SignatureAnalysis\bin\Debug\SignatureAnalysis.pdb
+D:\source\GitHub\SignatureAnalysis\obj\Debug\SignatureAnalysis.csprojResolveAssemblyReference.cache
+D:\source\GitHub\SignatureAnalysis\obj\Debug\SignatureAnalysis.exe
+D:\source\GitHub\SignatureAnalysis\obj\Debug\SignatureAnalysis.pdb

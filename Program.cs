@@ -88,6 +88,8 @@ namespace SignatureAnalysis
                 sw.Write("FILE PATH, FILE TYPE, MD5 HASH" + Environment.NewLine);
                 foreach (string file in toomanyfiles)
                 {
+                    FileMetaData myData = new FileMetaData();
+                    myData.FilePath = file;
                     byte[] doc = File.ReadAllBytes(file);
                     if (doc.Length > 2)
                     {
@@ -95,25 +97,31 @@ namespace SignatureAnalysis
                         byte doc2 = doc[1];
                         byte doc3 = doc[2];
                         byte doc4 = doc[3];
+
                         //JPG file
                         if (Convert.ToByte("FF", 16) == doc1 && Convert.ToByte("D8", 16) == doc2)
                         {
+                            myData.FileType = "JPG";
+                            myData.MD5Hash = ExtractMD5Hash(doc);
                             jcount++;
-                            sw.Write(file.ToString() + ", ");
-                            sw.Write("JPG, ");
-                            sw.Write(ExtractMD5Hash(doc));
-                            sw.WriteLine();
                         }
                         //PDF file
                         else if (Convert.ToByte("25", 16) == doc1 && Convert.ToByte("50", 16) == doc2 &&
                                  Convert.ToByte("44", 16) == doc3 && Convert.ToByte("46", 16) == doc4)
                         {
+                            myData.FileType = "PDF";
+                            myData.MD5Hash = ExtractMD5Hash(doc);
                             pcount++;
-                            sw.Write(file.ToString() + ", ");
-                            sw.Write("PDF, ");
-                            sw.Write(ExtractMD5Hash(doc));
+                        }
+
+                        if (!string.IsNullOrEmpty(myData.FileType))
+                        {
+                            sw.Write(myData.FilePath + ", ");
+                            sw.Write(myData.FileType + ", ");
+                            sw.Write(myData.MD5Hash);
                             sw.WriteLine();
                         }
+
                     }
                 }
             }
