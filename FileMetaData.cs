@@ -22,14 +22,6 @@ namespace SignatureAnalysis
         }
         private string CalculateFileType(string path)
         {
-            //byte[] doc = File.ReadAllBytes(path);
-            //using (var stream = File.OpenRead(path))
-            //    using(var reader = new StreamReader(stream, Encoding.UTF8))
-            //{
-            //    char[] buffer = new char[4];
-            //    int n = reader.ReadBlock(buffer,0,4);
-            //    char[] result = new char[n];
-
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
                 byte[] doc = new byte[4];
