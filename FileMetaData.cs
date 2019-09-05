@@ -17,35 +17,48 @@ namespace SignatureAnalysis
         public FileMetaData(string filePath)
         {
             FilePath = filePath;
-            FileType=CalculateFileType(filePath);
+            FileType = CalculateFileType(filePath);
             MD5Hash = ExtractMD5Hash(filePath);
         }
-        private  string CalculateFileType(string path)
+        private string CalculateFileType(string path)
         {
-            byte[] doc = File.ReadAllBytes(path);
-            if (doc.Length > 2)
+            //byte[] doc = File.ReadAllBytes(path);
+            //using (var stream = File.OpenRead(path))
+            //    using(var reader = new StreamReader(stream, Encoding.UTF8))
+            //{
+            //    char[] buffer = new char[4];
+            //    int n = reader.ReadBlock(buffer,0,4);
+            //    char[] result = new char[n];
+
+            using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                byte doc1 = doc[0];
-                byte doc2 = doc[1];
-                byte doc3 = doc[2];
-                byte doc4 = doc[3];
+                byte[] doc = new byte[4];
+                int numberofBytes = stream.Read(doc, 0, 4);
+                if (numberofBytes > 2)
+                {
+                    byte doc1 = doc[0];
+                    byte doc2 = doc[1];
+                    byte doc3 = doc[2];
+                    byte doc4 = doc[3];
+                    //JPG file
+                    if (Convert.ToByte("FF", 16) == doc1 && Convert.ToByte("D8", 16) == doc2)
+                    {
+                        return "JPG";
+                    }
+                    //PDF file
+                    else if (Convert.ToByte("25", 16) == doc1 && Convert.ToByte("50", 16) == doc2 &&
+                             Convert.ToByte("44", 16) == doc3 && Convert.ToByte("46", 16) == doc4)
+                    {
+                        return "PDF";
+                    }
+                }
 
-                //JPG file
-                if (Convert.ToByte("FF", 16) == doc1 && Convert.ToByte("D8", 16) == doc2)
-                {
-                    return "JPG";
-                }
-                //PDF file
-                else if (Convert.ToByte("25", 16) == doc1 && Convert.ToByte("50", 16) == doc2 &&
-                         Convert.ToByte("44", 16) == doc3 && Convert.ToByte("46", 16) == doc4)
-                {
-                    return "PDF";
-                }
             }
-
             return null;
-
         }
+
+
+
 
         public static string ExtractMD5Hash(string file)
         {
@@ -59,6 +72,7 @@ namespace SignatureAnalysis
             }
             return sb.ToString();
         }
-
     }
+
 }
+
